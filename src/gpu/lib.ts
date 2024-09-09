@@ -1,14 +1,14 @@
 import { parse } from 'acorn'
 import { generate } from 'astring'
 import * as es from 'estree'
-import { GPU } from 'gpu.js'
+// import { GPU } from 'gpu.js'
 
 import { DEFAULT_ECMA_VERSION } from '../constants'
 import { TypeError } from '../utils/rttc'
 import { gpuRuntimeTranspile } from './transfomer'
 
 // Heuristic : Only use GPU if array is bigger than this
-const MAX_SIZE = 200
+// const MAX_SIZE = 200
 
 // helper function to build 2D array output
 function buildArray(arr: Float32Array[][], end: any, res: any) {
@@ -75,23 +75,24 @@ function checkArray3D(arr: any, end: any): boolean {
  * 2. we have a large array (> 100 elements)
  */
 function checkValidGPU(f: any, end: any): boolean {
-  let res: any
-  if (end.length === 1) res = f(0)
-  if (end.length === 2) res = f(0, 0)
-  if (end.length === 3) res = f(0, 0, 0)
-
-  // we do not allow array assignment
-  // we expect the programmer break it down for us
-  if (typeof res !== 'number') {
-    return false
-  }
-
-  let cnt = 1
-  for (const i of end) {
-    cnt = cnt * i
-  }
-
-  return cnt > MAX_SIZE
+  return false;
+  // let res: any
+  // if (end.length === 1) res = f(0)
+  // if (end.length === 2) res = f(0, 0)
+  // if (end.length === 3) res = f(0, 0, 0)
+  //
+  // // we do not allow array assignment
+  // // we expect the programmer break it down for us
+  // if (typeof res !== 'number') {
+  //   return false
+  // }
+  //
+  // let cnt = 1
+  // for (const i of end) {
+  //   cnt = cnt * i
+  // }
+  //
+  // return cnt > MAX_SIZE
 }
 
 // just run on js!
@@ -135,7 +136,7 @@ function manualRun(f: any, end: any, res: any) {
  * @arr : array to be written to
  */
 export function __createKernel(end: any, extern: any, f: any, arr: any, f2: any) {
-  const gpu = new GPU()
+  const gpu: any = new Object();
 
   // check array is initialized properly
   let ok = checkArray(arr)
