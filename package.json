@@ -16,7 +16,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/source-academy/js-slang.git"
+    "url": "git+https://github.com/heyzec/js-slang.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "bugs": {
     "url": "https://github.com/source-academy/js-slang/issues"
