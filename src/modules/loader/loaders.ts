@@ -121,7 +121,8 @@ export const memoizedGetModuleManifestAsync = getManifestImporter()
 export const memoizedGetModuleDocsAsync = getMemoizedDocsImporter()
 
 const bundleAndTabImporter = wrapImporter<{ default: ModuleBundle }>(
-  typeof window !== 'undefined' && process.env.NODE_ENV !== 'test'
+  true
+  // typeof window !== 'undefined' && process.env.NODE_ENV !== 'test'
     ? (new Function('path', 'return import(`${path}?q=${Date.now()}`)') as any)
     : p => Promise.resolve(require(p))
 )
@@ -132,7 +133,7 @@ export async function loadModuleBundleAsync(
   node?: Node
 ): Promise<ModuleFunctions> {
   const { default: result } = await bundleAndTabImporter(
-    `${MODULES_STATIC_URL}/bundles/${moduleName}.js`
+    '/media/D/Documents/NUS/FYP/source-academy/js-slang/modules/bundles/repeat.mjs'
   )
   try {
     const loadedModule = result(getRequireProvider(context))
@@ -159,7 +160,7 @@ export async function loadModuleTabsAsync(moduleName: string) {
   return Promise.all(
     moduleInfo.tabs.map(async tabName => {
       const { default: result } = await bundleAndTabImporter(
-        `${MODULES_STATIC_URL}/tabs/${tabName}.js`
+        '/media/D/Documents/NUS/FYP/source-academy/js-slang/modules/tabs/Repeat.mjs'
       )
       return result
     })
