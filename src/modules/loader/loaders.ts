@@ -10,7 +10,7 @@ import type {
 import { getRequireProvider } from './requireProvider'
 
 /** Default modules static url. Exported for testing. */
-export let MODULES_STATIC_URL = 'https://sa-modules.heyzec.dedyn.io'
+export let MODULES_STATIC_URL = 'https://source-academy.github.io/modules'
 
 export function setModulesStaticURL(url: string) {
   MODULES_STATIC_URL = url
