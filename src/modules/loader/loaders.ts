@@ -133,7 +133,7 @@ export async function loadModuleBundleAsync(
   node?: Node
 ): Promise<ModuleFunctions> {
   const { default: result } = await bundleAndTabImporter(
-    '/media/D/Documents/NUS/FYP/source-academy/js-slang/modules/bundles/repeat.mjs'
+    `/media/D/Documents/NUS/FYP/source-academy/js-slang/modules/bundles/${moduleName}.mjs`
   )
   try {
     const loadedModule = result(getRequireProvider(context))
@@ -160,7 +160,7 @@ export async function loadModuleTabsAsync(moduleName: string) {
   return Promise.all(
     moduleInfo.tabs.map(async tabName => {
       const { default: result } = await bundleAndTabImporter(
-        '/media/D/Documents/NUS/FYP/source-academy/js-slang/modules/tabs/Repeat.mjs'
+        `/media/D/Documents/NUS/FYP/source-academy/js-slang/modules/tabs/${tabName}.mjs`
       )
       return result
     })
