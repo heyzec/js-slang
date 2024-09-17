@@ -11,9 +11,9 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/dist/repl/repl.js",
+            "program": "${workspaceFolder}/dist/repl",
             "console": "integratedTerminal",
-            "preLaunchTask": "tsc: build - tsconfig.json",
+            // "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
             ]
@@ -25,7 +25,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/dist/repl/repl.js",
+            "program": "${workspaceFolder}/dist/repl",
             "args": ["~/test.js"],
             "console": "integratedTerminal",
             "preLaunchTask": "tsc: build - tsconfig.json",
