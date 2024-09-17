@@ -77,9 +77,8 @@ export function parseError(errors: SourceError[], verbose: boolean = verboseErro
       explanation = error.explain()
     } catch (e) {
       throw error;
-      // explanation = error.toString();
-
     }
+
 
     if (verbose) {
       // TODO currently elaboration is just tagged on to a new line after the error message itself. find a better

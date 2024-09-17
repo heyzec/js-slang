@@ -10,7 +10,7 @@ import type {
 import { getRequireProvider } from './requireProvider'
 
 /** Default modules static url. Exported for testing. */
-export let MODULES_STATIC_URL = 'https://source-academy.github.io/modules'
+export let MODULES_STATIC_URL = 'https://sa-modules.heyzec.dedyn.io'
 
 export function setModulesStaticURL(url: string) {
   MODULES_STATIC_URL = url
@@ -122,7 +122,6 @@ export const memoizedGetModuleDocsAsync = getMemoizedDocsImporter()
 
 const bundleAndTabImporter = wrapImporter<{ default: ModuleBundle }>(
   true
-  // typeof window !== 'undefined' && process.env.NODE_ENV !== 'test'
     ? (new Function('path', 'return import(`${path}?q=${Date.now()}`)') as any)
     : p => Promise.resolve(require(p))
 )
@@ -133,7 +132,7 @@ export async function loadModuleBundleAsync(
   node?: Node
 ): Promise<ModuleFunctions> {
   const { default: result } = await bundleAndTabImporter(
-    `/media/D/Documents/NUS/FYP/source-academy/js-slang/modules/bundles/${moduleName}.mjs`
+    `${MODULES_STATIC_URL}/bundles/${moduleName}.js`
   )
   try {
     const loadedModule = result(getRequireProvider(context))
@@ -160,7 +159,7 @@ export async function loadModuleTabsAsync(moduleName: string) {
   return Promise.all(
     moduleInfo.tabs.map(async tabName => {
       const { default: result } = await bundleAndTabImporter(
-        `/media/D/Documents/NUS/FYP/source-academy/js-slang/modules/tabs/${tabName}.mjs`
+        `${MODULES_STATIC_URL}/tabs/${tabName}.js`
       )
       return result
     })
