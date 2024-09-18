@@ -35,12 +35,12 @@ abstract class ImportError implements SourceError {
 export class ModuleConnectionError extends ImportError {
   private static message: string = `Unable to get modules.`
   private static elaboration: string = `You should check your Internet connection, and ensure you have used the correct module path.`
-  constructor(node?: Node) {
+  constructor(public more: string, node?: Node) {
     super(node)
   }
 
   public explain() {
-    return ModuleConnectionError.message
+    return `${ModuleConnectionError.message}: ${this.more}`;
   }
 
   public elaborate() {

@@ -11,9 +11,10 @@ import { getRequireProvider } from './requireProvider'
 
 /** Default modules static url. Exported for testing. */
 export let MODULES_STATIC_URL = 'https://source-academy.github.io/modules'
+export let LOCAL_STATIC_URL = 'file:///media/D/Documents/NUS/FYP/source-academy/js-slang/modules'
 
 export function setModulesStaticURL(url: string) {
-  MODULES_STATIC_URL = url
+  // MODULES_STATIC_URL = url
 
   // Changing the module backend should clear these
   memoizedGetModuleDocsAsync.cache.clear()
@@ -47,7 +48,8 @@ function wrapImporter<T>(func: (p: string) => Promise<T>) {
         // Thrown specifically by jest
         error.code === 'ENOENT'
       ) {
-        throw new ModuleConnectionError()
+        throw error;
+        // throw new ModuleConnectionError('wrapImporter')
       }
       throw error
     }
@@ -61,7 +63,7 @@ export const docsImporter = wrapImporter<{ default: any }>(async p => {
   // browsers yet, so we use fetch in the meantime
   const resp = await fetch(p)
   if (resp.status !== 200 && resp.status !== 304) {
-    throw new ModuleConnectionError()
+    throw new ModuleConnectionError('docsImporter')
   }
 
   const result = await resp.json()
@@ -122,7 +124,7 @@ export const memoizedGetModuleDocsAsync = getMemoizedDocsImporter()
 
 const bundleAndTabImporter = wrapImporter<{ default: ModuleBundle }>(
   true
-    ? (new Function('path', 'return import(`${path}?q=${Date.now()}`)') as any)
+    ? (new Function('path', 'return import(`${path}`)') as any)
     : p => Promise.resolve(require(p))
 )
 
@@ -132,7 +134,7 @@ export async function loadModuleBundleAsync(
   node?: Node
 ): Promise<ModuleFunctions> {
   const { default: result } = await bundleAndTabImporter(
-    `${MODULES_STATIC_URL}/bundles/${moduleName}.js`
+    `${LOCAL_STATIC_URL}/bundles/${moduleName}.mjs`
   )
   try {
     const loadedModule = result(getRequireProvider(context))
@@ -159,7 +161,7 @@ export async function loadModuleTabsAsync(moduleName: string) {
   return Promise.all(
     moduleInfo.tabs.map(async tabName => {
       const { default: result } = await bundleAndTabImporter(
-        `${MODULES_STATIC_URL}/tabs/${tabName}.js`
+        `${LOCAL_STATIC_URL}/tabs/${tabName}.mjs`
       )
       return result
     })
